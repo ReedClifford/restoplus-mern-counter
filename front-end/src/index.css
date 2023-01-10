@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mainContainer {
+  @apply min-h-screen text-green-500 flex justify-center items-center;
+}
+
+.counterBody {
+  @apply shadow-md shadow-neutral-600 rounded-md p-8 flex
+    flex-col justify-center items-center bg-neutral-800 gap-5;
+}
+
+.buttons {
+  @apply px-4 py-2 border rounded-full border-neutral-600 hover:bg-neutral-900 duration-300 ease-in-out;
+}

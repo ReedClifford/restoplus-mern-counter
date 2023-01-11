@@ -1,5 +1,4 @@
 const Counter = require("../models/counterModel");
-const mongoose = require("mongoose");
 
 //get Counter
 const getCounter = async (req, res) => {
@@ -21,7 +20,6 @@ const createCounter = async (req, res) => {
 //increment
 const incrementCounter = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
 
   const counter = await Counter.findOneAndUpdate(
     { _id: id },

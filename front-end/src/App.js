@@ -8,33 +8,48 @@ import CounterCointainer from "./components/CounterContainer";
 
 const App = () => {
   const [count, setCount] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get("http://localhost:4001/api/counter");
 
       const { currentCount } = data[0];
+      setIsLoading(!isLoading);
       setCount(currentCount);
     };
     fetchData();
-  }, []);
+  }, [count]);
 
   const incrementCount = async () => {
-    return await axios.put(
-      "http://localhost:4001/api/counter/increment/63bcfd27e5eb348adc84c67f",
-      { count }
+    const { currentCount } = await axios.patch(
+      "http://localhost:4001/api/counter/increment/63bcfd27e5eb348adc84c67f"
     );
+    setCount(currentCount);
+  };
+
+  const decrementCount = async () => {
+    const { currentCount } = await axios.patch(
+      "http://localhost:4001/api/counter/decrement/63bcfd27e5eb348adc84c67f"
+    );
+    setCount(currentCount);
+  };
+  const resetCount = async () => {
+    const { currentCount } = await axios.patch(
+      "http://localhost:4001/api/counter/reset/63bcfd27e5eb348adc84c67f"
+    );
+    setCount(currentCount);
   };
 
   return (
     <section className="mainContainer">
       <div className="counterBody">
-        <CounterCointainer count={count} />
+        <CounterCointainer count={count} isLoading={isLoading} />
         <div className="flex items-center gap-3">
-          <Button className=" buttons" onClick={() => setCount(count - 1)}>
+          <Button className=" buttons" onClick={() => decrementCount()}>
             <FiMinus />
           </Button>
-          <Button className=" buttons" onClick={() => setCount(0)}>
+          <Button className=" buttons" onClick={() => resetCount()}>
             <BiReset />
           </Button>
           <Button className=" buttons" onClick={() => incrementCount()}>
